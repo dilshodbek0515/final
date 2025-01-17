@@ -5,6 +5,8 @@ import Sale from '../pages/sale/Sale'
 import Arrivals from '../pages/arrivals/Arrivals'
 import Brend from '../pages/brend/Brend'
 import Error from '../pages/error/Error'
+import Cart from '../pages/cart/Cart'
+import Search from '../pages/search/Search'
 
 const Router = () => {
   return (
@@ -29,6 +31,14 @@ const Router = () => {
             {
               path: 'brend',
               element: <Brend />
+            },
+            {
+              path: 'cart',
+              element: <Cart />
+            },
+            {
+              path: 'search',
+              element: <Search />
             }
           ]
         },

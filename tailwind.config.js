@@ -7,8 +7,10 @@ export default {
     plugins: [],
     colors: {
       ...colors,
-      primary: '#000'
+      primary: '#000',
+      bgGray: '#F0F0F0'
     },
+
     container: {
       center: true,
       screens: {
