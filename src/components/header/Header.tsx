@@ -30,7 +30,7 @@ const Header: React.FC = () => {
       <Divider />
       <nav className='mt-10'>
         <ul className='flex gap-10 flex-col'>
-          <select className='border-transparent outline-none w-24'>
+          <select className='border-transparent outline-none w-24 bg-transparent'>
             <option className='text-gray-600 text-lg text-nowrap' value='Shop'>
               Shop
             </option>
