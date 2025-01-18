@@ -2,7 +2,9 @@ import { useQuery } from '@tanstack/react-query'
 import { request } from '../../api'
 import React from 'react'
 import type { Product } from '../../types'
+import { useNavigate } from 'react-router-dom'
 const Product: React.FC = () => {
+  const naviagate = useNavigate()
   const query = useQuery({
     queryKey: ['products'],
     queryFn: () => {
@@ -15,7 +17,6 @@ const Product: React.FC = () => {
       <span key={index}>⭐</span>
     ))
   }
-  console.log(query.data?.data)
 
   return (
     <div className='w-full h-auto p-5 flex items-center flex-col gap-12 mt-20'>
@@ -28,7 +29,8 @@ const Product: React.FC = () => {
             <div key={index} className='h-[450px] flex flex-col gap-4'>
               <div className='w-full h-[70%] flex items-center justify-center bg-bgGray rounded-2xl'>
                 <img
-                  className='w-[80%] h-[80%]'
+                  onClick={() => naviagate(`/product/${product.id}`)}
+                  className='w-[80%] h-[80%] cursor-pointer'
                   src={product.images}
                   alt='img'
                 />

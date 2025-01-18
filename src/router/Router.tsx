@@ -8,6 +8,7 @@ import Error from '../pages/error/Error'
 import Cart from '../pages/cart/Cart'
 import Search from '../pages/search/Search'
 import Profil from '../pages/profil/Profil'
+import Detail from '../pages/detail/Detail'
 
 const Router = () => {
   return (
@@ -44,6 +45,10 @@ const Router = () => {
             {
               path: 'profil',
               element: <Profil />
+            },
+            {
+              path: '/product/:id',
+              element: <Detail />
             }
           ]
         },
