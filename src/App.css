@@ -1,5 +1,72 @@
-.active{
+.active {
     color: black;
     border-bottom: 2px solid black;
     padding-bottom: 5px;
+}
+
+.hero {
+    background-image: url("/src/assets/images/herobg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1.5fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 20px;
+}
+
+.item1 {
+    grid-column: span 1;
+    grid-row: span 1;
+    background-image: url("/src/assets/images/style1.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.item2 {
+    grid-column: span 2;
+    grid-row: span 1;
+    background-image: url("/src/assets/images/style2.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.item3 {
+    grid-column: span 2;
+    grid-row: span 3;
+    background-image: url("/src/assets/images/style3.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.item4 {
+    grid-column: span 1;
+    grid-row: span 1;
+    background-image: url("/src/assets/images/style4.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+@media (max-width:983px) {
+    .item1 {
+        grid-column: span 3;
+        grid-row: span 1;
+    }
+
+    .item2 {
+        grid-column: span 3;
+        grid-row: span 1;
+    }
+
+    .item3 {
+        grid-column: span 3;
+        grid-row: span 1;
+    }
+
+    .item4 {
+        grid-column: span 3;
+        grid-row: span 1;
+    }
 }
