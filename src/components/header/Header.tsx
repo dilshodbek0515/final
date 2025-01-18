@@ -32,13 +32,13 @@ const Header: React.FC = () => {
         <ul className='flex gap-10 flex-col'>
           <select className='border-transparent outline-none w-24 bg-transparent'>
             <option className='text-gray-600 text-lg text-nowrap' value='Shop'>
-              Shop
+              ENG
             </option>
             <option className='text-gray-600 text-lg text-nowrap' value='Shop'>
-              Shop
+              UZB
             </option>
             <option className='text-gray-600 text-lg text-nowrap' value='Shop'>
-              Shop
+              RUS
             </option>
           </select>
           <li
@@ -82,23 +82,14 @@ const Header: React.FC = () => {
         <nav>
           <ul className='flex gap-10 items-center justify-center max-xl:gap-5 max-lg:hidden'>
             <select className='border-transparent outline-none'>
-              <option
-                className='text-gray-600 text-lg text-nowrap'
-                value='Shop'
-              >
-                Shop
+              <option className='text-gray-600 text-lg text-nowrap' value='ENG'>
+                ENG
               </option>
-              <option
-                className='text-gray-600 text-lg text-nowrap'
-                value='Shop'
-              >
-                Shop
+              <option className='text-gray-600 text-lg text-nowrap' value='UZB'>
+                UZB
               </option>
-              <option
-                className='text-gray-600 text-lg text-nowrap'
-                value='Shop'
-              >
-                Shop
+              <option className='text-gray-600 text-lg text-nowrap' value='RUS'>
+                RUS
               </option>
             </select>
             <li className='text-gray-600 font-medium text-lg text-nowrap border-transparent max-xl:text-[16px]'>
@@ -132,7 +123,9 @@ const Header: React.FC = () => {
               <LuShoppingCart className='text-xl' />
             </Badge>
           </Link>
-          <FaRegUserCircle className='text-gray-600 text-2xl' />
+          <Link to={'/profil'}>
+            <FaRegUserCircle className='text-gray-600 text-2xl' />
+          </Link>
         </div>
       </div>
     </header>

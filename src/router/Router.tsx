@@ -7,6 +7,7 @@ import Brend from '../pages/brend/Brend'
 import Error from '../pages/error/Error'
 import Cart from '../pages/cart/Cart'
 import Search from '../pages/search/Search'
+import Profil from '../pages/profil/Profil'
 
 const Router = () => {
   return (
@@ -39,6 +40,10 @@ const Router = () => {
             {
               path: 'search',
               element: <Search />
+            },
+            {
+              path: 'profil',
+              element: <Profil />
             }
           ]
         },

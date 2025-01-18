@@ -1,7 +1,10 @@
+import Style from '../../components/style/Style'
 
 const Brend = () => {
   return (
-    <div>Brend</div>
+    <div>
+      <Style />
+    </div>
   )
 }
 

@@ -4,6 +4,15 @@
     padding-bottom: 5px;
 }
 
+body::-webkit-scrollbar {
+    width: 12px;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: rgb(92, 91, 91);
+    border-radius: 10px;
+}
+
 .hero {
     background-image: url("/src/assets/images/herobg.png");
     background-repeat: no-repeat;
