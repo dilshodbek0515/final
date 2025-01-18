@@ -27,7 +27,7 @@ const Footer = () => {
                 type='text'
                 required
                 placeholder='Enter your email address'
-                className='text-lg'
+                className='text-lg w-full h-full rounded-xl outline-none'
               />
             </div>
             <button className='w-[450px] h-[60px] px-5 text-lg bg-white rounded-full duration-300 hover:bg-transparent hover:text-white hover:border-white hover:border-2 max-lg:w-full max-md:h-10 max-sm:w-[90%]'>

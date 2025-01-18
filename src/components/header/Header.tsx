@@ -2,14 +2,79 @@ import { Link, NavLink } from 'react-router-dom'
 import logo from '../../assets/images/logo.png'
 import { LuShoppingCart } from 'react-icons/lu'
 import { FaRegUserCircle } from 'react-icons/fa'
-import { IoMenu, IoSearch } from 'react-icons/io5'
+import { IoClose, IoMenu, IoSearch } from 'react-icons/io5'
 import { Badge } from '@mui/material'
-const Header = () => {
+// sidebar
+import Box from '@mui/material/Box'
+import Drawer from '@mui/material/Drawer'
+import Divider from '@mui/material/Divider'
+import React from 'react'
+
+const Header: React.FC = () => {
+  const [open, setOpen] = React.useState(false)
+  const toggleDrawer = (newOpen: boolean) => () => {
+    setOpen(newOpen)
+  }
+
+  const DrawerList = (
+    <Box sx={{ width: 400, padding: 2 }} role='presentation'>
+      <div className='w-full flex items-center justify-between mb-5'>
+        <Link onClick={toggleDrawer(false)} to={'/'}>
+          <img src={logo} alt='' />
+        </Link>
+        <IoClose
+          onClick={toggleDrawer(false)}
+          className='text-red-500 text-xl'
+        />
+      </div>
+      <Divider />
+      <nav className='mt-10'>
+        <ul className='flex gap-10 flex-col'>
+          <select className='border-transparent outline-none w-24'>
+            <option className='text-gray-600 text-lg text-nowrap' value='Shop'>
+              Shop
+            </option>
+            <option className='text-gray-600 text-lg text-nowrap' value='Shop'>
+              Shop
+            </option>
+            <option className='text-gray-600 text-lg text-nowrap' value='Shop'>
+              Shop
+            </option>
+          </select>
+          <li
+            onClick={toggleDrawer(false)}
+            className='text-gray-600 font-medium text-lg text-nowrap border-transparent'
+          >
+            <NavLink to={'/sale'}>On Sale</NavLink>
+          </li>
+          <li
+            onClick={toggleDrawer(false)}
+            className='text-gray-600 font-medium text-lg text-nowrap border-transparent'
+          >
+            <NavLink to={'/arrivals'}>New Arrivals</NavLink>
+          </li>
+          <li
+            onClick={toggleDrawer(false)}
+            className='text-gray-600 font-medium text-lg text-nowrap border-transparent'
+          >
+            <NavLink to={'/brend'}>Brands</NavLink>
+          </li>
+        </ul>
+      </nav>
+    </Box>
+  )
+
   return (
     <header className='w-full h-auto p-5'>
       <div className='container bg-white h-auto flex items-center justify-between gap-10 max-xl:gap-5'>
         <div className='flex items-center justify-center gap-2'>
-          <IoMenu className='text-gray-600 text-2xl hidden max-lg:block' />
+          <IoMenu
+            onClick={toggleDrawer(true)}
+            className='text-gray-600 text-2xl hidden max-lg:block'
+          />
+          <Drawer open={open} onClose={toggleDrawer(false)}>
+            {DrawerList}
+          </Drawer>
           <Link to={'/'}>
             <img className='max-w-40 max-sm:w-32' src={logo} alt='img' />
           </Link>
@@ -60,7 +125,7 @@ const Header = () => {
         </form>
         <div className='flex items-center justify-center gap-5'>
           <Link to={'/search'}>
-            <IoSearch className='text-gray-600 text-2xl hidden max-sm:block' />
+            <IoSearch className='text-gray-600 text-2xl hidden max-md:block' />
           </Link>
           <Link to={'/cart'}>
             <Badge color='primary' badgeContent={0} showZero>
