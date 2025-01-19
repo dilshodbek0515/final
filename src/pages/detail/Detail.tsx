@@ -2,24 +2,56 @@ import React, { useState } from 'react'
 import { Link, NavLink, useParams } from 'react-router-dom'
 import { GoChevronRight } from 'react-icons/go'
 import { useGetShopDetailQuery } from '../../redux/api/productApi'
-import { Products } from '../../types'
+import { Comment, Products } from '../../types'
 import { Divider } from '@mui/material'
-import { FaMinus, FaPlus } from 'react-icons/fa'
+import { FaMinus, FaPlus, FaStar } from 'react-icons/fa'
 import Loading from '../../components/loading/Loading'
+import { useQuery } from '@tanstack/react-query'
+import { request } from '../../api'
+import { HiDotsVertical } from 'react-icons/hi'
 
 const Detail: React.FC = () => {
-  const [count, setCount] = useState(0)
   const { id } = useParams()
   const { data } = useGetShopDetailQuery(id) as { data?: Products }
-  console.log(data)
+  const [price, setPrice] = useState<number>(data?.price || 0)
+  const [count, setCount] = useState(0)
 
   const renderStars = (star: number) => {
     return Array.from({ length: star }, (_, index) => (
-      <span key={index}>⭐</span>
+      <span key={index}>
+        <FaStar className='text-yellow-400' />
+      </span>
     ))
   }
+  const commenrStar = (star: number) => {
+    return Array.from({ length: star }, (_, index) => (
+      <span key={index}>
+        <FaStar className='text-yellow-400' />
+      </span>
+    ))
+  }
+
+  const increment = () => {
+    setCount(p => p + 1)
+    setPrice(prevPrice => prevPrice + (data?.price || 0))
+  }
+
+  const decrement = () => {
+    setCount(p => p - 1)
+    setPrice(prevPrice => prevPrice - (data?.price || 0))
+  }
+
+  const { data: comments } = useQuery({
+    queryKey: ['comments', id],
+    queryFn: async () => {
+      const response = await request.get(`/${id}/comments`)
+      return response.data
+    },
+    enabled: !!id
+  })
+
   return (
-    <section className='flex flex-col gap-24'>
+    <section className='flex flex-col gap-24 p-5'>
       <div className='w-full h-auto p-5'>
         {!data ? (
           <Loading />
@@ -70,12 +102,10 @@ const Detail: React.FC = () => {
                   {data?.title}
                 </h2>
                 <div className='flex items-center gap-5'>
-                  <p className='text-xl'>{renderStars(data?.star)}</p>
+                  <p className='text-xl flex items-center gap-2'>{renderStars(data?.star)}</p>
                   <p className='text-xl'>{data?.star} / 5</p>
                 </div>
-                <strong className='text-4xl'>
-                  $ {data.price} <del className='text-gray-500'>$ 3000</del>
-                </strong>
+                <strong className='text-4xl'>$ {price.toFixed(2)}</strong>
                 <p className='text-xl text-gray-300 max-w-[700px] leading-8 max-xl:w-96 max-sm:text-sm max-sm:w-auto'>
                   {data.description}
                 </p>
@@ -118,17 +148,14 @@ const Detail: React.FC = () => {
                 <div className='flex items-center gap-5'>
                   <div className='w-60 h-16 flex items-center justify-between py-2 px-5 bg-bgGray rounded-full gap-2'>
                     <button
-                      disabled={count === 1}
+                      disabled={count === 0}
                       className='text-xl text-black'
-                      onClick={() => setCount(p => p - 1)}
+                      onClick={decrement}
                     >
                       <FaMinus />
                     </button>
                     <p className='text-2xl'>{count}</p>
-                    <button
-                      className='text-xl text-black '
-                      onClick={() => setCount(p => p + 1)}
-                    >
+                    <button className='text-xl text-black ' onClick={increment}>
                       <FaPlus />
                     </button>
                   </div>
@@ -142,6 +169,41 @@ const Detail: React.FC = () => {
               </div>
             </div>
           </div>
+        )}
+      </div>
+
+      <div className='container h-auto flex flex-col gap-10'>
+        <div className='w-full h-auto flex justify-between items-center gap-5'>
+          <h2 className='text-3xl text-black font-bold text-nowrap max-sm:text-xl'>All Reviews</h2>
+          <button className='w-52 h-14 rounded-full bg-black text-white max-sm:px-5'>
+            Write a Review
+          </button>
+        </div>
+        {comments && comments.length > 0 ? (
+          <div className='grid grid-cols-2 max-lg:grid-cols-1'>
+            {comments?.map((comment: Comment) => (
+              <div
+                className='h-80 border-2 p-7 rounded-2xl flex flex-col gap-5 max-sm:gap-2'
+                key={comment.id}
+              >
+                <div className='w-full flex justify-between items-center'>
+                  <strong className='flex gap-3 text-xl'>
+                    {commenrStar(comment.star)}
+                  </strong>
+                  <HiDotsVertical className='text-xl text-primary' />
+                </div>
+                <h2 className='text-primary text-2xl font-bold'>
+                  {comment.author}
+                </h2>
+                <p className='text-lg text-gray-500 w-[90%] max-sm:text-[16px]'>{comment.text}</p>
+                <p className='text-xl text-gray-500 mt-5 max-sm:mt-0'>
+                  {comment.createdAt}
+                </p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p>No Comments</p>
         )}
       </div>
     </section>
