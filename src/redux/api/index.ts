@@ -2,9 +2,9 @@ import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react'
 
 const baseQuery = async (args: any, api: any, extraOptions: any) => {
   const rawBaseQuery = fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_BASE_URL,
+    baseUrl: import.meta.env.VITE_APP_BASE_URL,
     prepareHeaders: (headers: Headers) => {
-      const token = import.meta.env.VITE_TOKEN
+      const token = import.meta.env.VITE_APP_BASE_URL
       if (token) {
         headers.set('Authorization', `Bearer ${token}`)
       }

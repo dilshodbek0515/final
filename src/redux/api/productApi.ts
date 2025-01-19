@@ -1,14 +1,14 @@
 import { api } from './index'
 
-export const movieApi = api.injectEndpoints({
+export const productApi = api.injectEndpoints({
   endpoints: (build: any) => ({
     getShopDetail: build.query({
       query: (id: string) => ({
-        url: `/product/${id}`
+        url: `/${id}`
       }),
       providesTags: ['Product']
     })
   })
 })
 
-export const { useGetShopDetailQuery } = movieApi
+export const { useGetShopDetailQuery } = productApi

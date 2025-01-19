@@ -4,6 +4,6 @@ export interface Product {
   description: string
   star: number
   price: number
-  images: string
+  images: string[]
   size: string
 }
