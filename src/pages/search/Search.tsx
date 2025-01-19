@@ -1,6 +1,7 @@
+import React from 'react'
 import { IoSearch } from 'react-icons/io5'
 
-const Search = () => {
+const Search:React.FC = () => {
   return (
     <div className='w-full h-auto p-5 py-20 flex items-center flex-col gap-10'>
       <form className='container h-20 flex items-center border-2 px-5 rounded-full max-sm:h-16'>

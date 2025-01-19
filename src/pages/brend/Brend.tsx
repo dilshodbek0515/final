@@ -1,6 +1,7 @@
+import React from 'react'
 import Style from '../../components/style/Style'
 
-const Brend = () => {
+const Brend: React.FC = () => {
   return (
     <div>
       <Style />

@@ -1,5 +1,6 @@
+import React from 'react'
 import './Loading.css'
-const Loading = () => {
+const Loading: React.FC = () => {
   return (
     <div className='flex items-center justify-center'>
       <div className='lds-roller'>

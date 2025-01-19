@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { request } from '../../api'
 import React from 'react'
-import type { Product } from '../../types'
+import type { Products } from '../../types'
 import { useNavigate } from 'react-router-dom'
 const Product: React.FC = () => {
   const naviagate = useNavigate()
@@ -25,13 +25,13 @@ const Product: React.FC = () => {
       </h2>
       {query.data?.data && (
         <div className='container grid grid-cols-4'>
-          {query.data.data.map((product: Product, index: number) => (
+          {query.data.data.map((product: Products, index: number) => (
             <div key={index} className='h-[450px] flex flex-col gap-4'>
               <div className='w-full h-[70%] flex items-center justify-center bg-bgGray rounded-2xl'>
                 <img
                   onClick={() => naviagate(`/product/${product.id}`)}
                   className='w-[80%] h-[80%] cursor-pointer'
-                  src={product.images}
+                  src={product.images[0]}
                   alt='img'
                 />
               </div>

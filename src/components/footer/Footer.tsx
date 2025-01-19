@@ -12,7 +12,8 @@ import card3 from '../../assets/images/card3.png'
 import card4 from '../../assets/images/card4.png'
 import card5 from '../../assets/images/card5.png'
 import { HiOutlineMail } from 'react-icons/hi'
-const Footer = () => {
+import React from 'react'
+const Footer: React.FC = () => {
   return (
     <footer className='w-full h-auto bg-bgGray p-5 mt-32 max-md:mt-52'>
       <div className='container h-auto flex flex-col items-center gap-12 relative'>

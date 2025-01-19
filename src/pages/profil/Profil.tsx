@@ -7,8 +7,9 @@ import {
   Grid,
   Button
 } from '@mui/material'
+import React from 'react'
 
-const Profil = () => {
+const Profil:React.FC = () => {
   return (
     <Container maxWidth='sm'>
       <Card className='h-full'>

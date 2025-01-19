@@ -1,8 +1,7 @@
+import React from 'react'
 
-const Customers = () => {
-  return (
-    <div>Customers</div>
-  )
+const Customers: React.FC = () => {
+  return <div>Customers</div>
 }
 
 export default Customers

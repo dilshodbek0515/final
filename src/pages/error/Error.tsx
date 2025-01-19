@@ -1,12 +1,13 @@
+import React from 'react'
 import { Link } from 'react-router-dom'
 
-const Error = () => {
+const Error: React.FC = () => {
   return (
     <div className='flex items-center justify-center'>
       <div className='container flex flex-col items-center justify-center gap-5'>
         <img
           className='w-[50%] h-auto max-xl:w-[80%] max-md:[50%] max-sm:w-full'
-          src='https://cdn.acowebs.com/wp-content/uploads/2023/10/3acwebs-1.jpg'
+          src='https://support.heberjahiz.com/hc/article_attachments/21013076295570'
           alt='not found img'
         />
         <Link

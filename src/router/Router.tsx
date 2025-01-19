@@ -9,8 +9,9 @@ import Cart from '../pages/cart/Cart'
 import Search from '../pages/search/Search'
 import Profil from '../pages/profil/Profil'
 import Detail from '../pages/detail/Detail'
+import React from 'react'
 
-const Router = () => {
+const Router:React.FC = () => {
   return (
     <div>
       {useRoutes([
