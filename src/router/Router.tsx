@@ -10,8 +10,9 @@ import Search from '../pages/search/Search'
 import Profil from '../pages/profil/Profil'
 import Detail from '../pages/detail/Detail'
 import React from 'react'
+import CheckOut from '../pages/checkOut/CheckOut'
 
-const Router:React.FC = () => {
+const Router: React.FC = () => {
   return (
     <div>
       {useRoutes([
@@ -46,6 +47,10 @@ const Router:React.FC = () => {
             {
               path: 'profil',
               element: <Profil />
+            },
+            {
+              path: 'checkout',
+              element: <CheckOut />
             },
             {
               path: '/product/:id',

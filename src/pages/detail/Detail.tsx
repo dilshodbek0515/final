@@ -1,29 +1,25 @@
-import React, { useState } from 'react'
-import { Link, NavLink, useParams } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, NavLink, useNavigate, useParams } from 'react-router-dom'
 import { GoChevronRight } from 'react-icons/go'
 import { useGetShopDetailQuery } from '../../redux/api/productApi'
-import { Comment, Products } from '../../types'
+import { Products } from '../../types'
 import { Divider } from '@mui/material'
 import { FaMinus, FaPlus, FaStar } from 'react-icons/fa'
 import Loading from '../../components/loading/Loading'
+import Customers from '../../components/customers/Customers'
 import { useQuery } from '@tanstack/react-query'
 import { request } from '../../api'
-import { HiDotsVertical } from 'react-icons/hi'
 
 const Detail: React.FC = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   const { id } = useParams()
   const { data } = useGetShopDetailQuery(id) as { data?: Products }
   const [price, setPrice] = useState<number>(data?.price || 0)
   const [count, setCount] = useState(0)
 
   const renderStars = (star: number) => {
-    return Array.from({ length: star }, (_, index) => (
-      <span key={index}>
-        <FaStar className='text-yellow-400' />
-      </span>
-    ))
-  }
-  const commenrStar = (star: number) => {
     return Array.from({ length: star }, (_, index) => (
       <span key={index}>
         <FaStar className='text-yellow-400' />
@@ -41,14 +37,19 @@ const Detail: React.FC = () => {
     setPrice(prevPrice => prevPrice - (data?.price || 0))
   }
 
-  const { data: comments } = useQuery({
-    queryKey: ['comments', id],
-    queryFn: async () => {
-      const response = await request.get(`/${id}/comments`)
-      return response.data
-    },
-    enabled: !!id
+  const naviagate = useNavigate()
+  const query = useQuery({
+    queryKey: ['products'],
+    queryFn: () => {
+      return request('').then(res => res)
+    }
   })
+
+  const star = (star: number) => {
+    return Array.from({ length: star }, (_, index) => (
+      <span key={index}>⭐</span>
+    ))
+  }
 
   return (
     <section className='flex flex-col gap-24 p-5'>
@@ -102,7 +103,9 @@ const Detail: React.FC = () => {
                   {data?.title}
                 </h2>
                 <div className='flex items-center gap-5'>
-                  <p className='text-xl flex items-center gap-2'>{renderStars(data?.star)}</p>
+                  <p className='text-xl flex items-center gap-2'>
+                    {renderStars(data?.star)}
+                  </p>
                   <p className='text-xl'>{data?.star} / 5</p>
                 </div>
                 <strong className='text-4xl'>$ {price.toFixed(2)}</strong>
@@ -171,40 +174,42 @@ const Detail: React.FC = () => {
           </div>
         )}
       </div>
-
-      <div className='container h-auto flex flex-col gap-10'>
-        <div className='w-full h-auto flex justify-between items-center gap-5'>
-          <h2 className='text-3xl text-black font-bold text-nowrap max-sm:text-xl'>All Reviews</h2>
-          <button className='w-52 h-14 rounded-full bg-black text-white max-sm:px-5'>
-            Write a Review
-          </button>
-        </div>
-        {comments && comments.length > 0 ? (
-          <div className='grid grid-cols-2 max-lg:grid-cols-1'>
-            {comments?.map((comment: Comment) => (
-              <div
-                className='h-80 border-2 p-7 rounded-2xl flex flex-col gap-5 max-sm:gap-2'
-                key={comment.id}
-              >
-                <div className='w-full flex justify-between items-center'>
-                  <strong className='flex gap-3 text-xl'>
-                    {commenrStar(comment.star)}
+      <Customers />
+      <div className='w-full h-auto border-2 p-5 flex items-center flex-col gap-12 mt-20'>
+        <h2 className='text-5xl text-black text-center font-extrabold max-md:text-2xl'>
+          NEW ARRIVALS
+        </h2>
+        {query.data?.data && (
+          <div className='container grid grid-cols-4 grid-rows-1 h-auto max-xl:grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1'>
+            {query.data.data
+              ?.slice(2, 6)
+              .map((product: Products, index: number) => (
+                <div key={index} className='h-[450px] flex flex-col gap-4'>
+                  <div className='w-full h-[70%] flex items-center justify-center bg-bgGray rounded-2xl'>
+                    <img
+                      onClick={() => naviagate(`/product/${product.id}`)}
+                      className='w-[80%] h-[80%] cursor-pointer'
+                      src={product.images[0]}
+                      alt='img'
+                    />
+                  </div>
+                  <h2 className='px-3 text-xl font-semibold capitalize max-md:text-lg'>
+                    {product.title}
+                  </h2>
+                  <p className='px-3 flex items-center'>{star(product.star)}</p>
+                  <strong className='px-3 pb-3 font-bold text-2xl'>
+                    ${product.price}
                   </strong>
-                  <HiDotsVertical className='text-xl text-primary' />
                 </div>
-                <h2 className='text-primary text-2xl font-bold'>
-                  {comment.author}
-                </h2>
-                <p className='text-lg text-gray-500 w-[90%] max-sm:text-[16px]'>{comment.text}</p>
-                <p className='text-xl text-gray-500 mt-5 max-sm:mt-0'>
-                  {comment.createdAt}
-                </p>
-              </div>
-            ))}
+              ))}
           </div>
-        ) : (
-          <p>No Comments</p>
         )}
+        <Link
+          to={'/arrivals'}
+          className='w-80 h-14 bg-transparent flex justify-center items-center duration-300 rounded-full border-2 text-xl hover:bg-gray-500 hover:text-white hover:border-transparent max-md:w-52'
+        >
+          View All
+        </Link>
       </div>
     </section>
   )

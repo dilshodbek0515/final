@@ -1,18 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Brends from '../../components/brends/Brends'
-import Customers from '../../components/customers/Customers'
 import Hero from '../../components/hero/Hero'
 import Product from '../../components/product/Product'
 import Style from '../../components/style/Style'
 
-const Home:React.FC = () => {
+const Home: React.FC = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   return (
     <div>
       <Hero />
       <Brends />
       <Product />
       <Style />
-      <Customers />
     </div>
   )
 }

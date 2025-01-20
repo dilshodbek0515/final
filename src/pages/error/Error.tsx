@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 const Error: React.FC = () => {
+   useEffect(() => {
+      window.scrollTo(0, 0)
+    }, [])
   return (
     <div className='flex items-center justify-center'>
       <div className='container flex flex-col items-center justify-center gap-5'>

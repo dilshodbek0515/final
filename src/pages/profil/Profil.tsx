@@ -7,9 +7,12 @@ import {
   Grid,
   Button
 } from '@mui/material'
-import React from 'react'
+import React, { useEffect } from 'react'
 
-const Profil:React.FC = () => {
+const Profil: React.FC = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   return (
     <Container maxWidth='sm'>
       <Card className='h-full'>
