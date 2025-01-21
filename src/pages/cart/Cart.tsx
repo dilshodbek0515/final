@@ -32,7 +32,7 @@ const Cart: React.FC = () => {
   }
   return (
     <div className='p-5'>
-      {cart?.map(item => (
+      {cart?.map((item: Cart) => (
         <div
           key={item.id}
           className='container flex justify-between max-2xl:gap-5 max-xl:flex-col'
