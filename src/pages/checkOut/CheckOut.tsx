@@ -3,19 +3,19 @@ const CheckOut = () => {
     <section className='w-full h-auto p-5'>
       <div className='container flex items-center justify-center flex-col gap-20'>
         <h2 className='text-5xl text-black font-bold'>Check Out</h2>
-        <div className='w-full flex justify-between gap-2'>
-          <form className='w-[50%] flex flex-col'>
-            <div className='w-full p-10 border-2 rounded-2xl flex flex-col gap-5'>
+        <div className='w-full flex justify-between gap-2 max-md:flex-col'>
+          <form className='w-[50%] flex flex-col max-md:w-full'>
+            <div className='w-full p-10 border-2 rounded-2xl flex flex-col gap-5 max-sm:p-2'>
               <h3 className='text-2xl text-primary font-bold'>
                 Contact Infomation
               </h3>
-              <div className='w-full flex justify-between'>
+              <div className='w-full flex justify-between max-2xl:flex-col'>
                 <div className='w-auto flex flex-col gap-5'>
                   <h5 className='uppercase text-lg text-primary font-lg'>
                     First Name
                   </h5>
                   <input
-                    className='outline-none border border-black w-80 h-10 rounded-md px-2'
+                    className='outline-none border border-black w-80 h-10 rounded-md px-2 max-2xl:w-full'
                     type='text'
                     placeholder='First name'
                     required
@@ -26,7 +26,7 @@ const CheckOut = () => {
                     Last Name
                   </h5>
                   <input
-                    className='outline-none border border-black w-80 h-10 rounded-md px-2'
+                    className='outline-none border border-black w-80 h-10 rounded-md px-2 max-2xl:w-full'
                     type='text'
                     placeholder='Last name'
                     required
@@ -35,7 +35,7 @@ const CheckOut = () => {
               </div>
               <div className='w-full flex flex-col gap-5'>
                 <h5 className='uppercase text-lg text-primary font-lg'>
-                  First Name
+                  Phone number
                 </h5>
                 <input
                   className='outline-none border border-black w-full h-10 rounded-md px-2'
@@ -60,9 +60,9 @@ const CheckOut = () => {
               Place Order
             </button>
           </form>
-          <div className='w-[40%]'>
+          <div className='w-[40%] max-md:w-full'>
             <textarea
-              className='w-full min-h-96 border-2 outline-none p-5 text-2xl'
+              className='w-full min-h-96 border-2 rounded-xl outline-none p-5 text-2xl'
               placeholder='Old Summary'
             ></textarea>
           </div>

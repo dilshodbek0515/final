@@ -31,18 +31,23 @@ const Cart: React.FC = () => {
     setPrice(prevPrice => prevPrice - (data?.price || 0))
   }
   return (
-    <div>
+    <div className='p-5'>
       {cart?.map(item => (
-        <div key={item.id} className='container flex justify-between'>
+        <div
+          key={item.id}
+          className='container flex justify-between max-2xl:gap-5 max-xl:flex-col'
+        >
           <div className='flex flex-col'>
-            <div className='flex justify-between gap-5 w-[800px] bg-bgGray p-5 rounded-xl mb-5'>
+            <div className='flex justify-between gap-5 w-[800px] bg-bgGray p-5 rounded-xl mb-5 max-2xl:w-full'>
               <img
-                className='w-40 h-40 rounded-xl'
+                className='w-40 h-40 rounded-xl max-sm:w-24 max-sm:h-24'
                 src={item.image[0]}
                 alt='img'
               />
               <div className='flex flex-col gap-2'>
-                <h2 className='text-2xl text-black font-bold'>{item.title}</h2>
+                <h2 className='text-2xl text-black font-bold max-sm:text-lg max-sm:w-full'>
+                  {item.title}
+                </h2>
                 <p>
                   Size: <span className='text-gray-500'>Large</span>
                 </p>
@@ -55,7 +60,7 @@ const Cart: React.FC = () => {
                 <button onClick={() => handleRemoveFromCart(item.id)}>
                   <FaTrash className='text-red-500 text-2xl' />
                 </button>
-                <div className='w-44 h-14 flex items-center justify-between py-2 px-5 bg-gray-300 rounded-full gap-2'>
+                <div className='w-44 h-14 flex items-center justify-between py-2 px-5 bg-gray-300 rounded-full gap-2 max-sm:w-32 max-[450px]:flex-col max-[450px]:w-auto max-[450px]:h-auto'>
                   <button
                     disabled={count === 0}
                     className='text-xl text-black'
@@ -71,7 +76,7 @@ const Cart: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className='w-[600px] h-auto bg-bgGray rounded-xl flex flex-col p-5 gap-5'>
+          <div className='w-[600px] h-auto bg-bgGray rounded-xl flex flex-col p-5 gap-5 max-xl:w-full'>
             <h2 className='text-2xl text-primary font-bold'>Order Summary</h2>
             <div className='w-full h-auto flex justify-between items-center gap-2'>
               <p className='text-xl text-gray-500'>Subtotal</p>
@@ -96,9 +101,9 @@ const Cart: React.FC = () => {
                 $ {(item.price, item.price + length)}
               </span>
             </div>
-            <div className='w-full h-auto flex justify-between items-center gap-2'>
+            <div className='w-full h-auto flex justify-between items-center gap-2 max-sm:flex-col'>
               <input
-                className='w-96 h-12 text-xl bg-gray-300 rounded-full outline-none px-5'
+                className='w-96 h-12 text-xl bg-gray-300 rounded-full outline-none px-5 max-sm:w-full'
                 type='text'
                 placeholder='Add promo code'
               />
@@ -108,7 +113,7 @@ const Cart: React.FC = () => {
             </div>
             <Link
               to={'/checkOut'}
-              className='w-full text-xl flex items-center justify-center gap-5 text-white font-bold px-10 py-3 bg-black rounded-full hover:opacity-70'
+              className='w-full text-xl flex items-center justify-center gap-5 text-nowrap text-white font-bold px-10 py-3 bg-black rounded-full hover:opacity-70'
             >
               Go to Checkout <FaArrowRightLong />
             </Link>
