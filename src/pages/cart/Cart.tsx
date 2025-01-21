@@ -81,7 +81,7 @@ const Cart: React.FC = () => {
             <div className='w-full h-auto flex justify-between items-center gap-2'>
               <p className='text-xl text-gray-500'>Subtotal</p>
               <span className='text-3xl text-black font-bold'>
-                $ {item.price}
+                $ {item.price || price}
               </span>
             </div>
             <div className='w-full h-auto flex justify-between items-center gap-2'>
