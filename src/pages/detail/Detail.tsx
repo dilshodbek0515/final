@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Link, NavLink, useNavigate, useParams } from 'react-router-dom'
 import { GoChevronRight } from 'react-icons/go'
-import { useGetShopDetailQuery } from '../../redux/api/productApi'
+import {
+  useGetCardByIdQuery,
+  useGetShopDetailQuery
+} from '../../redux/api/productApi'
 import { Products } from '../../types'
 import { Divider } from '@mui/material'
 import { FaMinus, FaPlus, FaStar } from 'react-icons/fa'
@@ -9,6 +12,8 @@ import Loading from '../../components/loading/Loading'
 import Customers from '../../components/customers/Customers'
 import { useQuery } from '@tanstack/react-query'
 import { request } from '../../api'
+import { useDispatch } from 'react-redux'
+import { addToCart } from '../../redux/api'
 
 const Detail: React.FC = () => {
   useEffect(() => {
@@ -16,7 +21,7 @@ const Detail: React.FC = () => {
   }, [])
   const { id } = useParams()
   const { data } = useGetShopDetailQuery(id) as { data?: Products }
-  const [price, setPrice] = useState<number>(data?.price || 0)
+  const [payment, setPrice] = useState<number>(data?.price || 0)
   const [count, setCount] = useState(0)
 
   const renderStars = (star: number) => {
@@ -49,6 +54,24 @@ const Detail: React.FC = () => {
     return Array.from({ length: star }, (_, index) => (
       <span key={index}>⭐</span>
     ))
+  }
+
+  const { data: product } = useGetCardByIdQuery(id) as { data: Products }
+  const dispatch = useDispatch()
+
+  const handleAddToCart = () => {
+    if (product) {
+      dispatch(
+        addToCart({
+          id: product.id,
+          title: product.title,
+          amount: payment,
+          quantity: count,
+          image: [product.images],
+          price: product.price
+        })
+      )
+    }
   }
 
   return (
@@ -108,7 +131,7 @@ const Detail: React.FC = () => {
                   </p>
                   <p className='text-xl'>{data?.star} / 5</p>
                 </div>
-                <strong className='text-4xl'>$ {price.toFixed(2)}</strong>
+                <strong className='text-4xl'>$ {payment.toFixed(2)}</strong>
                 <p className='text-xl text-gray-300 max-w-[700px] leading-8 max-xl:w-96 max-sm:text-sm max-sm:w-auto'>
                   {data.description}
                 </p>
@@ -163,6 +186,7 @@ const Detail: React.FC = () => {
                     </button>
                   </div>
                   <button
+                    onClick={handleAddToCart}
                     className='w-96 h-16 bg-primary text-center rounded-full text-nowrap
                    border-2 border-primary duration-300 text-white text-xl hover:bg-transparent hover:text-black max-xl:w-auto max-xl:px-10'
                   >

@@ -30,3 +30,34 @@ export const api = createApi({
   tagTypes: ['Product'],
   endpoints: () => ({})
 })
+
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { Cart } from '../../types'
+
+type CartState = Cart[]
+
+const initialState: CartState = []
+
+const cartSlice = createSlice({
+  name: 'cart',
+  initialState,
+  reducers: {
+    addToCart: (state, action) => {
+      const product = action.payload
+      const existingProduct = state.find(item => item.id === product.id)
+      if (existingProduct) {
+        state.map(item =>
+          item.id === product.id ? (item.quantity += 1) : item
+        )
+      } else {
+        state.push({ ...product })
+      }
+    },
+    removeFromCart: (state, action: PayloadAction<number>) => {
+      return state.filter(item => item.id !== action.payload)
+    }
+  }
+})
+
+export const { addToCart, removeFromCart } = cartSlice.actions
+export default cartSlice.reducer

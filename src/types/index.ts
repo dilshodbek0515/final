@@ -16,3 +16,12 @@ export interface Comment {
   star: number
   createdAt: number
 }
+
+export type Cart = {
+  id: number
+  title: string
+  price: number
+  quantity: number
+  image: string[]
+  amount: number
+}
