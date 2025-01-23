@@ -205,9 +205,7 @@ const Detail: React.FC = () => {
         </h2>
         {query.data?.data && (
           <div className='container grid grid-cols-4 grid-rows-1 h-auto max-xl:grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1'>
-            {query.data.data
-              ?.slice(2, 6)
-              .map((product: Products, index: number) => (
+            {query.data.data?.slice(2, 6).map((product: Products, index: number) => (
                 <div key={index} className='h-[450px] flex flex-col gap-4'>
                   <div className='w-full h-[70%] flex items-center justify-center bg-bgGray rounded-2xl'>
                     <img
@@ -230,7 +228,8 @@ const Detail: React.FC = () => {
         )}
         <Link
           to={'/arrivals'}
-          className='w-80 h-14 bg-transparent flex justify-center items-center duration-300 rounded-full border-2 text-xl hover:bg-gray-500 hover:text-white hover:border-transparent max-md:w-52'
+          className='w-80 h-14 bg-transparent flex justify-center items-center duration-300
+           rounded-full border-2 text-xl hover:bg-gray-500 hover:text-white hover:border-transparent max-md:w-52'
         >
           View All
         </Link>
