@@ -21,7 +21,7 @@ const Cart: React.FC = () => {
 
   const handleRemoveCart = (id: number) => {
     dispatch(removeFromCart(id))
-    toast.success('Mahsulot savatdan olib tashlandi ✅')
+    toast.success('Mahsulot savatdan olib tashlandi')
     setItemCount(prev => {
       const updated = { ...prev }
       delete updated[id]
