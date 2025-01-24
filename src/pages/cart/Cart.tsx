@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import type { Cart } from '../../types'
 import toast, { Toaster } from 'react-hot-toast'
 import Summary from '../../components/summary/Summary'
-
+import empty from '../../assets/images/empty.png'
 const Cart: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -102,11 +102,7 @@ const Cart: React.FC = () => {
           ))
         ) : (
           <div className='flex justify-center items-center flex-col h-full'>
-            <img
-              className='w-96'
-              src='https://bdcosmeticsbazar.com/assets/images/empty-cart.png'
-              alt='img'
-            />
+            <img className='w-96' src={empty} alt='img' />
             <Link
               to={'/arrivals'}
               className='text-nowrap bg-gray-300 px-5 py-2 rounded-full text-black font-bold hover:opacity-70'
