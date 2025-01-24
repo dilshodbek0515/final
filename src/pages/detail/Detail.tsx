@@ -14,6 +14,7 @@ import { useQuery } from '@tanstack/react-query'
 import { request } from '../../api'
 import { useDispatch } from 'react-redux'
 import { addToCart } from '../../redux/api'
+import toast, { Toaster } from 'react-hot-toast'
 
 const Detail: React.FC = () => {
   useEffect(() => {
@@ -21,8 +22,8 @@ const Detail: React.FC = () => {
   }, [])
   const { id } = useParams()
   const { data } = useGetShopDetailQuery(id) as { data?: Products }
-  const [payment, setPrice] = useState<number>(data?.price || 0)
-  const [count, setCount] = useState(0)
+  const [payment, setPrice] = useState<number>(data?.price || 120)
+  const [count, setCount] = useState(1)
 
   const renderStars = (star: number) => {
     return Array.from({ length: star }, (_, index) => (
@@ -65,11 +66,12 @@ const Detail: React.FC = () => {
         addToCart({
           id: product.id,
           title: product.title,
+          price: product.price,
           amount: payment,
           quantity: count,
-          image: [product.images],
-          price: product.price
-        })
+          image: [product.images]
+        }),
+        toast.success(`Mahsulot savatga qo'shildi ✅`)
       )
     }
   }
@@ -174,7 +176,7 @@ const Detail: React.FC = () => {
                 <div className='flex items-center gap-5'>
                   <div className='w-60 h-16 flex items-center justify-between py-2 px-5 bg-bgGray rounded-full gap-2'>
                     <button
-                      disabled={count === 0}
+                      disabled={count === 1}
                       className='text-xl text-black'
                       onClick={decrement}
                     >
@@ -205,7 +207,9 @@ const Detail: React.FC = () => {
         </h2>
         {query.data?.data && (
           <div className='container grid grid-cols-4 grid-rows-1 h-auto max-xl:grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1'>
-            {query.data.data?.slice(2, 6).map((product: Products, index: number) => (
+            {query.data.data
+              ?.slice(2, 6)
+              .map((product: Products, index: number) => (
                 <div key={index} className='h-[450px] flex flex-col gap-4'>
                   <div className='w-full h-[70%] flex items-center justify-center bg-bgGray rounded-2xl'>
                     <img
@@ -234,6 +238,7 @@ const Detail: React.FC = () => {
           View All
         </Link>
       </div>
+      <Toaster position='top-center' reverseOrder={false} />
     </section>
   )
 }

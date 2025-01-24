@@ -1,5 +1,11 @@
 import { createApi, fetchBaseQuery, retry } from '@reduxjs/toolkit/query/react'
-
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { Cart } from '../../types'
+import axios from 'axios'
+const request = axios.create({
+  baseURL: import.meta.env.VITE_APP_BASE_URL
+})
+export { request }
 const baseQuery = async (args: any, api: any, extraOptions: any) => {
   const rawBaseQuery = fetchBaseQuery({
     baseUrl: import.meta.env.VITE_APP_BASE_URL,
@@ -30,9 +36,6 @@ export const api = createApi({
   tagTypes: ['Product'],
   endpoints: () => ({})
 })
-
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Cart } from '../../types'
 
 type CartState = Cart[]
 

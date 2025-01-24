@@ -1,28 +1,57 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { removeFromCart } from '../../redux/api'
 import { RootState } from '../../redux'
-import { FaTrash } from 'react-icons/fa'
+import { FaMinus, FaPlus, FaTrash } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { Divider } from '@mui/material'
 import { FaArrowRightLong } from 'react-icons/fa6'
 import type { Cart } from '../../types'
+import toast, { Toaster } from 'react-hot-toast'
 
 const Cart: React.FC = () => {
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
+
   const cart = useSelector((state: RootState) => state.cart)
   const dispatch = useDispatch()
 
-  const totalPrice = cart.reduce((acc, item) => acc + item.price, 0)
-  const discount = totalPrice * 0.2
-  const deliveryFee = 15
-  const grandTotal = totalPrice - discount + deliveryFee
+  const [itemCounts, setItemCounts] = useState<Record<number, number>>(() =>
+    cart.reduce((acc, item) => ({ ...acc, [item.id]: item.quantity || 1 }), {})
+  )
 
   const handleRemoveFromCart = (id: number) => {
     dispatch(removeFromCart(id))
+    toast.success('Mahsulot savatdan olib tashlandi ✅')
+    setItemCounts(prev => {
+      const updated = { ...prev }
+      delete updated[id]
+      return updated
+    })
   }
+
+  const handleIncrement = (id: number) => {
+    setItemCounts(prev => ({
+      ...prev,
+      [id]: prev[id] + 1
+    }))
+  }
+
+  const handleDecrement = (id: number) => {
+    setItemCounts(prev => ({
+      ...prev,
+      [id]: prev[id] > 1 ? prev[id] - 1 : 1
+    }))
+  }
+
+  const totalPrice = cart.reduce(
+    (acc, item) => acc + item.price * (itemCounts[item.id] || item.quantity),
+    0
+  )
+  const discount = totalPrice * 0.2
+  const deliveryFee = 15
+  const grandTotal = totalPrice - discount + deliveryFee
 
   return (
     <div className='container flex justify-between'>
@@ -39,18 +68,34 @@ const Cart: React.FC = () => {
                 <h2 className='text-2xl text-black font-bold max-sm:text-lg max-sm:w-full'>
                   {item.title}
                 </h2>
+                <strong>Count: {itemCounts[item.id]}</strong>
                 <p>
                   Size: <span className='text-gray-500'>Large</span>
                 </p>
-                <p>
-                  Color: <span className='text-gray-500'>white</span>
-                </p>
-                <strong className='text-2xl text-black'>$ {item.price}</strong>
+                <strong className='text-2xl text-black'>
+                  Price: {item.price * itemCounts[item.id]}
+                </strong>
               </div>
               <div className='flex flex-col items-end justify-between'>
                 <button onClick={() => handleRemoveFromCart(item.id)}>
                   <FaTrash className='text-red-500 text-2xl' />
                 </button>
+                <div className='w-32 h-16 flex items-center justify-between py-2 px-5 bg-gray-300 rounded-full gap-2'>
+                  <button
+                    onClick={() => handleDecrement(item.id)}
+                    disabled={itemCounts[item.id] === 1}
+                    className='text-xl text-black'
+                  >
+                    <FaMinus />
+                  </button>
+                  <p className='text-2xl'>{itemCounts[item.id]}</p>
+                  <button
+                    onClick={() => handleIncrement(item.id)}
+                    className='text-xl text-black'
+                  >
+                    <FaPlus />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -96,6 +141,7 @@ const Cart: React.FC = () => {
           Go to Checkout <FaArrowRightLong />
         </Link>
       </div>
+      <Toaster position='top-center' reverseOrder={false} />
     </div>
   )
 }
