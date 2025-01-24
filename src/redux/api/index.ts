@@ -36,11 +36,18 @@ export const api = createApi({
   tagTypes: ['Product'],
   endpoints: () => ({})
 })
-
 type CartState = Cart[]
-
-const initialState: CartState = []
-
+// ----------------------------------------------------------------
+// localStorage
+const loadFromLocalStorage = (): CartState => {
+  const savedCart = localStorage.getItem('cart')
+  return savedCart ? JSON.parse(savedCart) : []
+}
+const saveToLocalStorage = (cart: CartState) => {
+  localStorage.setItem('cart', JSON.stringify(cart))
+}
+// ----------------------------------------------------------------
+const initialState: CartState = loadFromLocalStorage()
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
@@ -55,8 +62,12 @@ const cartSlice = createSlice({
       } else {
         state.push({ ...product })
       }
+      saveToLocalStorage(state)
     },
     removeFromCart: (state, action: PayloadAction<number>) => {
+      const newState = state.filter(item => item.id !== action.payload)
+      saveToLocalStorage(newState)
+      return newState
       return state.filter(item => item.id !== action.payload)
     }
   }

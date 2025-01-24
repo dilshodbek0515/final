@@ -9,6 +9,10 @@ body::-webkit-scrollbar {
     width: 12px;
 }
 
+.cart::-webkit-scrollbar {
+    width: 0px;
+}
+
 a {
     text-decoration: none;
 }

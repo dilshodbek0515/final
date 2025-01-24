@@ -25,3 +25,10 @@ export type Cart = {
   image: string[]
   amount: number
 }
+
+export interface SummaryProps {
+  grandTotal: number
+  totalPrice: number
+  discount: number
+  deliveryFee: number
+}
