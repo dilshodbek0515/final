@@ -13,18 +13,6 @@ import Loading from '../loading/Loading'
 import toast, { Toaster } from 'react-hot-toast'
 import { IoTrash } from 'react-icons/io5'
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 600,
-  borderRadius: '5px',
-  bgcolor: 'background.paper',
-  boxShadow: 24,
-  p: 4
-}
-
 const Customers: React.FC = () => {
   const [open, setOpen] = useState(false)
   const [newComment, setNewComment] = useState({
@@ -162,16 +150,30 @@ const Customers: React.FC = () => {
         }}
       >
         <Fade in={open}>
-          <Box sx={style}>
+          <Box
+            sx={{
+              width: '100%',
+              maxWidth: '600px',
+              margin: '0 auto',
+              padding: '20px',
+              backgroundColor: '#FFFFFFFF',
+              borderRadius: '8px',
+              position: 'absolute',
+              zIndex: '10',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)'
+            }}
+          >
             <form
               onSubmit={handleSubmit}
               className='w-full flex items-center justify-between gap-5 flex-col cursor-pointer'
             >
-              <h2 className='text-4xl text-black font-bold'>Sharh qo‘shish</h2>
+              <h2 className='text-4xl text-black font-bold'>Write a Review</h2>
               <input
                 type='number'
                 name='star'
-                placeholder='Yulduzlar sonini kiriting (1-5)'
+                placeholder='Enter your stars (1-5)'
                 value={newComment.star}
                 onChange={handleChange}
                 className='w-full h-12 px-2 border-2 outline-none rounded-md text-lg'
@@ -180,7 +182,7 @@ const Customers: React.FC = () => {
               <input
                 type='text'
                 name='author'
-                placeholder='Ismingizni kiriting'
+                placeholder='Enter your name'
                 value={newComment.author}
                 onChange={handleChange}
                 className='w-full h-12 px-2 border-2 outline-none rounded-md text-lg'
@@ -189,7 +191,7 @@ const Customers: React.FC = () => {
               <input
                 type='text'
                 name='text'
-                placeholder='Sharhingizni kiriting'
+                placeholder='Enter your comment'
                 value={newComment.text}
                 onChange={handleChange}
                 className='w-full h-12 px-2 border-2 outline-none rounded-md text-lg'
@@ -199,7 +201,7 @@ const Customers: React.FC = () => {
                 type='submit'
                 className='w-full h-12 rounded-md bg-gray-200 duration-300 text-black text-xl hover:bg-slate-300'
               >
-                Qo‘shish
+                Add
               </button>
             </form>
           </Box>

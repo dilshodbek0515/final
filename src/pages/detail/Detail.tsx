@@ -124,7 +124,7 @@ const Detail: React.FC = () => {
                 />
               </div>
               <div className='flex flex-col gap-5'>
-                <h2 className='text-5xl text-primary font-extrabold max-xl:text-3xl'>
+                <h2 className='text-5xl text-primary font-extrabold max-xl:text-3xl max-md:text-xl'>
                   {data?.title}
                 </h2>
                 <div className='flex items-center gap-5'>
@@ -173,7 +173,7 @@ const Detail: React.FC = () => {
                   </NavLink>
                 </div>
                 <Divider />
-                <div className='flex items-center gap-5'>
+                <div className='flex items-center gap-5 max-md:flex-col'>
                   <div className='w-60 h-16 flex items-center justify-between py-2 px-5 bg-bgGray rounded-full gap-2'>
                     <button
                       disabled={count === 1}

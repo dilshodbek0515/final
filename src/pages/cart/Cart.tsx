@@ -17,14 +17,14 @@ const Cart: React.FC = () => {
   const cart = useSelector((state: RootState) => state.cart)
   const dispatch = useDispatch()
 
-  const [itemCounts, setItemCounts] = useState<Record<number, number>>(() =>
+  const [itemCounts, setItemCount] = useState<Record<number, number>>(() =>
     cart.reduce((acc, item) => ({ ...acc, [item.id]: item.quantity || 1 }), {})
   )
 
-  const handleRemoveFromCart = (id: number) => {
+  const handleRemoveCart = (id: number) => {
     dispatch(removeFromCart(id))
     toast.success('Mahsulot savatdan olib tashlandi ✅')
-    setItemCounts(prev => {
+    setItemCount(prev => {
       const updated = { ...prev }
       delete updated[id]
       return updated
@@ -32,14 +32,14 @@ const Cart: React.FC = () => {
   }
 
   const handleIncrement = (id: number) => {
-    setItemCounts(prev => ({
+    setItemCount(prev => ({
       ...prev,
       [id]: prev[id] + 1
     }))
   }
 
   const handleDecrement = (id: number) => {
-    setItemCounts(prev => ({
+    setItemCount(prev => ({
       ...prev,
       [id]: prev[id] > 1 ? prev[id] - 1 : 1
     }))
@@ -54,33 +54,33 @@ const Cart: React.FC = () => {
   const grandTotal = totalPrice - discount + deliveryFee
 
   return (
-    <div className='container flex justify-between'>
+    <div className='container flex justify-between max-xl:flex-col max-md:p-5'>
       <div className='w-full h-auto flex flex-col gap-10'>
         {cart?.map((item: Cart) => (
           <div key={item.id} className='flex flex-col'>
-            <div className='flex justify-between gap-5 w-[800px] bg-bgGray p-5 rounded-xl mb-5 max-2xl:w-full'>
+            <div className='flex justify-between gap-5 w-[800px] bg-bgGray p-5 rounded-xl mb-5 max-2xl:w-[80%] max-xl:w-full max-sm:flex-col max-sm:items-center max-sm:justify-center'>
               <img
-                className='w-40 h-40 rounded-xl max-sm:w-24 max-sm:h-24'
+                className='w-40 h-40 rounded-xl max-sm:w-60'
                 src={item.image[0]}
                 alt='img'
               />
-              <div className='flex flex-col gap-2'>
-                <h2 className='text-2xl text-black font-bold max-sm:text-lg max-sm:w-full'>
+              <div className='flex flex-col gap-2 max-sm:items-center'>
+                <h2 className='text-2xl text-black font-bold max-sm:text-center'>
                   {item.title}
                 </h2>
                 <strong>Count: {itemCounts[item.id]}</strong>
                 <p>
                   Size: <span className='text-gray-500'>Large</span>
                 </p>
-                <strong className='text-2xl text-black'>
+                <strong className='text-2xl text-black max-xl:text-xl'>
                   Price: {item.price * itemCounts[item.id]}
                 </strong>
               </div>
-              <div className='flex flex-col items-end justify-between'>
-                <button onClick={() => handleRemoveFromCart(item.id)}>
+              <div className='flex flex-col items-end justify-between max-sm:items-center max-sm:gap-5'>
+                <button onClick={() => handleRemoveCart(item.id)}>
                   <FaTrash className='text-red-500 text-2xl' />
                 </button>
-                <div className='w-32 h-16 flex items-center justify-between py-2 px-5 bg-gray-300 rounded-full gap-2'>
+                <div className='w-32 h-16 flex items-center justify-between py-2 px-5 bg-gray-300 rounded-full gap-2 max-xl:h-auto'>
                   <button
                     onClick={() => handleDecrement(item.id)}
                     disabled={itemCounts[item.id] === 1}
@@ -104,23 +104,23 @@ const Cart: React.FC = () => {
       <div className='w-[600px] h-[500px] bg-bgGray rounded-xl flex flex-col p-5 gap-5 max-xl:w-full'>
         <h2 className='text-2xl text-primary font-bold'>Order Summary</h2>
         <div className='w-full h-auto flex justify-between items-center gap-2'>
-          <p className='text-xl text-gray-500'>Subtotal</p>
-          <span className='text-3xl text-black font-bold'>$ {totalPrice}</span>
+          <p className='text-xl text-gray-500 max-sm:text-lg'>Subtotal</p>
+          <span className='text-3xl text-black font-bold max-sm:text-lg'>$ {totalPrice}</span>
         </div>
         <div className='w-full h-auto flex justify-between items-center gap-2'>
-          <p className='text-xl text-gray-500'>Discount (-20%)</p>
-          <span className='text-3xl text-red-500 font-bold'>
+          <p className='text-xl text-gray-500 max-sm:text-lg'>Discount (-20%)</p>
+          <span className='text-3xl text-red-500 font-bold max-sm:text-lg'>
             $ {discount.toFixed(2)}
           </span>
         </div>
         <div className='w-full h-auto flex justify-between items-center gap-2'>
-          <p className='text-xl text-gray-500'>Delivery Fee</p>
-          <span className='text-3xl text-black font-bold'>$ {deliveryFee}</span>
+          <p className='text-xl text-gray-500 max-sm:text-lg'>Delivery Fee</p>
+          <span className='text-3xl text-black font-bold max-sm:text-lg'>$ {deliveryFee}</span>
         </div>
         <Divider className='mb-5' />
         <div className='w-full h-auto flex justify-between items-center gap-2'>
-          <p className='text-xl text-gray-500'>Total</p>
-          <span className='text-3xl text-black font-bold'>
+          <p className='text-xl text-gray-500 max-sm:text-lg'>Total</p>
+          <span className='text-3xl text-black font-bold max-sm:text-lg'>
             $ {grandTotal.toFixed(2)}
           </span>
         </div>
