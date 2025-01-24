@@ -111,7 +111,7 @@ const CheckOut = () => {
                 </h5>
                 <input
                   className='outline-none border border-black w-full h-10 rounded-md px-2'
-                  type='text'
+                  type='number'
                   placeholder='Phone number'
                   required
                   name='phone'
